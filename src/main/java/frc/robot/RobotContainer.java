@@ -12,6 +12,7 @@ import frc.robot.commands.Autos;
 // import frc.robot.commands.ExampleCommand;
 // import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.OutTake;
+import frc.robot.subsystems.Drive;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -27,6 +28,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   // private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final OutTake mOutTake;
+  private final Drive mDrive;
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
@@ -38,6 +40,28 @@ public class RobotContainer {
     outTakeMotor.setInverted(false);
     outTakeMotor.configPeakCurrentLimit(40);
     mOutTake = new OutTake(outTakeMotor);
+
+    TalonSRX driveFrontRight = new TalonSRX(3);
+    TalonSRX driveFrontLeft = new TalonSRX(1);
+    TalonSRX driveBackRight = new TalonSRX(4);
+    TalonSRX driveBackLeft = new TalonSRX(2);
+
+    //ALL drive Settings
+    //Sets inverted to false
+    driveFrontLeft.setInverted(false);
+    driveFrontRight.setInverted(false);
+    driveBackLeft.setInverted(false);
+    driveBackRight.setInverted(false);
+
+    //Sets Peak Current limit to 40
+    driveFrontLeft.configPeakCurrentLimit(40);
+    driveFrontRight.configPeakCurrentLimit(40);
+    driveBackLeft.configPeakCurrentLimit(40);
+    driveBackRight.configPeakCurrentLimit(40);
+
+    // Create mDrive
+    mDrive = new Drive(driveFrontRight,driveFrontLeft,driveBackRight,driveBackLeft)
+
     // Configure the trigger bindings
     configureBindings();
   }

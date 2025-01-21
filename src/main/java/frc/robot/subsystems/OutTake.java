@@ -10,7 +10,7 @@ import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class OutTake extends SubsystemBase {
-  /** Creates a new OutTake. */
+  /** Creates a new OutTa ke. */
 
   private final TalonSRX motor;
 

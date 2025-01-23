@@ -5,7 +5,6 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
@@ -15,6 +14,7 @@ import frc.robot.subsystems.OutTake;
 import frc.robot.subsystems.Drive;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -60,7 +60,17 @@ public class RobotContainer {
     driveBackRight.configPeakCurrentLimit(40);
 
     // Create mDrive
-    mDrive = new Drive(driveFrontRight,driveFrontLeft,driveBackRight,driveBackLeft)
+    mDrive = new Drive(driveFrontRight,driveFrontLeft,driveBackRight,driveBackLeft);
+
+    mDrive.setDefaultCommand(
+      new RunCommand(
+        () -> mDrive.driveDir(
+        m_driverController.getLeftY(), 
+        m_driverController.getRightY()
+        ),
+        mDrive
+        )
+      );
 
     // Configure the trigger bindings
     configureBindings();

@@ -53,7 +53,7 @@ public class RobotContainer {
     driveBackLeft.setInverted(false);
     driveBackRight.setInverted(false);
 
-    //Sets Peak Current limit to 40
+    //Sets Peak Amp (Power) limit to 40
     driveFrontLeft.configPeakCurrentLimit(40);
     driveFrontRight.configPeakCurrentLimit(40);
     driveBackLeft.configPeakCurrentLimit(40);
@@ -62,11 +62,13 @@ public class RobotContainer {
     // Create mDrive
     mDrive = new Drive(driveFrontRight,driveFrontLeft,driveBackRight,driveBackLeft);
 
+    // this allows the joysticks to control the 4 drive motors
+    // without being a simple "true-false" statement
     mDrive.setDefaultCommand(
       new RunCommand(
         () -> mDrive.driveDir(
-        m_driverController.getLeftY(), 
-        m_driverController.getRightY()
+        m_driverController.getLeftY(), // basically saying the position of the Y axis on the controller
+        m_driverController.getRightY() // will be the power demand given to the motor(s)
         ),
         mDrive
         )

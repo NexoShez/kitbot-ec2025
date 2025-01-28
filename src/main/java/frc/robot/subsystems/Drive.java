@@ -15,6 +15,8 @@ public class Drive extends SubsystemBase {
   private final TalonSRX mBR;
   private final TalonSRX mBL;
 
+  private boolean isDriveControlsInv = false;
+
   /** Creates a new Drive. */
   public Drive(TalonSRX fR,TalonSRX fL,TalonSRX bR,TalonSRX bL) {
     this.mFR=fR;
@@ -29,14 +31,27 @@ public class Drive extends SubsystemBase {
      * y2 is the RIGHT JOYSTICK
      */
 
-     // inverts because of values funky
+     // ben wanted this
+     if (isDriveControlsInv == true) {
      y1 = y1*-1;
-     y2=y2*-1; 
+     y2=y2*1; // invert by opposite for some reason
+     } else {
+      y1=y1*1;
+      y2=y2*-1;
+     }
      
      mBL.set(TalonSRXControlMode.PercentOutput,y1);
      mBR.set(TalonSRXControlMode.PercentOutput,y2);
      mFL.set(TalonSRXControlMode.PercentOutput,y1);
      mFR.set(TalonSRXControlMode.PercentOutput,y2);
+  }
+
+  public void invertControls() {
+    if (isDriveControlsInv == true) {
+      isDriveControlsInv = false;
+    } else {
+      isDriveControlsInv = true;
+    }
   }
 
   @Override

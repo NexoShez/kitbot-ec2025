@@ -36,15 +36,15 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    TalonSRX outTakeMotor = new TalonSRX(5);
+    TalonSRX outTakeMotor = new TalonSRX(1);
     outTakeMotor.setInverted(false);
     outTakeMotor.configPeakCurrentLimit(40);
     mOutTake = new OutTake(outTakeMotor);
 
-    TalonSRX driveFrontRight = new TalonSRX(3);
-    TalonSRX driveFrontLeft = new TalonSRX(1);
-    TalonSRX driveBackRight = new TalonSRX(4);
-    TalonSRX driveBackLeft = new TalonSRX(2);
+    TalonSRX driveFrontRight = new TalonSRX(15);
+    TalonSRX driveFrontLeft = new TalonSRX(2);
+    TalonSRX driveBackRight = new TalonSRX(14);
+    TalonSRX driveBackLeft = new TalonSRX(0);
 
     //ALL drive Settings
     //Sets inverted to false
@@ -87,11 +87,13 @@ public class RobotContainer {
    */
   private void configureBindings() {
 
-    m_driverController.leftTrigger().onTrue(Commands.run(() -> mOutTake.setSpeed(0), mOutTake));
+    m_driverController.b().onTrue(Commands.runOnce(() -> mDrive.invertControls(), mDrive));
+
+    m_driverController.leftTrigger().onTrue(Commands.run(() -> mOutTake.setSpeed(1), mOutTake));
     m_driverController.leftTrigger().onFalse(Commands.runOnce(() -> mOutTake.setSpeed(0), mOutTake));
     
     m_driverController.rightTrigger().onTrue(Commands.run(() -> mOutTake.setSpeed(-1), mOutTake));
-    m_driverController.rightTrigger().onFalse(Commands.runOnce(() -> mOutTake.setSpeed(1), mOutTake));
+    m_driverController.rightTrigger().onFalse(Commands.runOnce(() -> mOutTake.setSpeed(0), mOutTake));
 
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     // new Trigger(m_exampleSubsystem::exampleCondition)

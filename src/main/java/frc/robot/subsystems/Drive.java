@@ -16,6 +16,7 @@ public class Drive extends SubsystemBase {
   private final TalonSRX mBL;
 
   private boolean isDriveControlsInv = false;
+  // private double deadzone = .2;
 
   /** Creates a new Drive. */
   public Drive(TalonSRX fR,TalonSRX fL,TalonSRX bR,TalonSRX bL) {
@@ -39,11 +40,23 @@ public class Drive extends SubsystemBase {
       y1=y1*1;
       y2=y2*-1;
      }
+
+    //  if (y1 < .2) {
+    //   y1=0;
+    //  }
+    //  if (y2 < .2) {
+    //   y2=0;
+    //  }
      
+    //  if (y1 > .2) {
      mBL.set(TalonSRXControlMode.PercentOutput,y1);
-     mBR.set(TalonSRXControlMode.PercentOutput,y2);
      mFL.set(TalonSRXControlMode.PercentOutput,y1);
+    //  }
+
+    //  if (y2 > .2) {
      mFR.set(TalonSRXControlMode.PercentOutput,y2);
+     mBR.set(TalonSRXControlMode.PercentOutput,y2);
+    //  }
   }
 
   public void invertControls() {

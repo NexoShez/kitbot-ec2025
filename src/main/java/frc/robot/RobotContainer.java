@@ -5,13 +5,18 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.AutoController;
 import frc.robot.commands.Autos;
 // import frc.robot.commands.ExampleCommand;
 // import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.OutTake;
 import frc.robot.subsystems.Drive;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -25,10 +30,13 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
+  // public static final OutTake returnOutTake = null;
   // The robot's subsystems and commands are defined here...
   // private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final OutTake mOutTake;
   private final Drive mDrive;
+
+  private SendableChooser<Command> chooser;
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
@@ -74,9 +82,22 @@ public class RobotContainer {
         )
       );
 
+      chooser = AutoBuilder.buildAutoChooser();
+      SmartDashboard.putData("auto chooser from robotc.", chooser);
+
+
     // Configure the trigger bindings
     configureBindings();
   }
+
+  private void AutoCommands() {
+    AutoController auto_ = new AutoController(mOutTake);
+    NamedCommands.registerCommand("Release", auto_);
+  }
+
+  // public OutTake returnOutTake() {
+  //   return mOutTake;
+  // }
 
   /**
    * Use this method to define your trigger->command mappings. Triggers can be created via the
@@ -112,7 +133,8 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
+
     // An example command will be run in autonomous
-    return Autos.exampleAuto(null);
+    return chooser.getSelected();
   }
 }

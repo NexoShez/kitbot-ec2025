@@ -4,12 +4,10 @@
 
 package frc.robot.commands;
 
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.subsystems.Drive;
+// import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.OutTake;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -20,12 +18,8 @@ public class AutoController extends SequentialCommandGroup {
   private final OutTake outtake;
 
   /** Creates a new Auto. */
-  public AutoController(TalonSRX motor) {
-    TalonSRX outTakeMotor = motor;
-    outTakeMotor.setInverted(false);
-    outTakeMotor.configPeakCurrentLimit(40);
-    outtake = new OutTake(outTakeMotor);
-
+  public AutoController(OutTake motor) {
+    outtake = motor;
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands();

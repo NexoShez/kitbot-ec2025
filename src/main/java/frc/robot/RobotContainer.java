@@ -10,9 +10,6 @@ import com.pathplanner.lib.auto.NamedCommands;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.AutoController;
-import frc.robot.commands.Autos;
-// import frc.robot.commands.ExampleCommand;
-// import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.OutTake;
 import frc.robot.subsystems.Drive;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -81,6 +78,8 @@ public class RobotContainer {
         mDrive
         )
       );
+
+      AutoCommands();
 
       chooser = AutoBuilder.buildAutoChooser();
       SmartDashboard.putData("auto chooser from robotc.", chooser);

@@ -19,10 +19,15 @@ public class AutoController extends SequentialCommandGroup {
 
   /** Creates a new Auto. */
   public AutoController(OutTake motor) {
+    if (motor == null) {
+      throw new NullPointerException("Outtake Motor is Null in AutoController");
+    }
+
+    // hi guys
     outtake = motor;
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands();
+    // addCommands();
   }
 
   public Command Release() {

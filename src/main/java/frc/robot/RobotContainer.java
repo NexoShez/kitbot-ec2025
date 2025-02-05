@@ -7,11 +7,13 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+// import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.AutoController;
 import frc.robot.subsystems.OutTake;
 import frc.robot.subsystems.Drive;
+// import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -50,6 +52,7 @@ public class RobotContainer {
     TalonSRX driveFrontLeft = new TalonSRX(2);
     TalonSRX driveBackRight = new TalonSRX(14);
     TalonSRX driveBackLeft = new TalonSRX(0);
+    // Pose2d robotpose = new Pose2d();
 
     //ALL drive Settings
     //Sets inverted to false
@@ -65,7 +68,7 @@ public class RobotContainer {
     driveBackRight.configPeakCurrentLimit(40);
 
     // Create mDrive
-    mDrive = new Drive(driveFrontRight,driveFrontLeft,driveBackRight,driveBackLeft);
+    mDrive = new Drive(driveFrontRight,driveFrontLeft,driveBackRight,driveBackLeft/*, robotpose*/);
 
     // this allows the joysticks to control the 4 drive motors
     // without being a simple "true-false" statement
@@ -135,5 +138,6 @@ public class RobotContainer {
 
     // An example command will be run in autonomous
     return chooser.getSelected();
+    // return new PathPlannerAuto("KitBot_TEST");
   }
 }

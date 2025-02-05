@@ -35,7 +35,7 @@ public class RobotContainer {
   private final OutTake mOutTake;
   private final Drive mDrive;
 
-  private SendableChooser<Command> chooser;
+  private SendableChooser<Command> chooser = new SendableChooser<>();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
@@ -84,7 +84,6 @@ public class RobotContainer {
 
       AutoCommands();
 
-      chooser = AutoBuilder.buildAutoChooser();
       SmartDashboard.putData("auto chooser from robotc.", chooser);
 
 
@@ -95,6 +94,9 @@ public class RobotContainer {
   private void AutoCommands() {
     AutoController auto_ = new AutoController(mOutTake);
     NamedCommands.registerCommand("Release", auto_);
+    
+    chooser.setDefaultOption("_default", auto_);
+    chooser.addOption("Release", auto_);
   }
 
   // public OutTake returnOutTake() {

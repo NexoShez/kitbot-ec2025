@@ -4,11 +4,20 @@
 
 package frc.robot;
 
+// import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
 import edu.wpi.first.wpilibj.TimedRobot;
+// import edu.wpi.first.wpilibj.motorcontrol.Talon;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+// import edu.wpi.first.wpilibj2.command.Commands;
+import frc.robot.subsystems.AutoHandler;
+// import frc.robot.commands.AutoController;
+import frc.robot.subsystems.Drive;
+import frc.robot.subsystems.OutTake;
 
 /**
  * The methods in this class are called automatically corresponding to each mode, as described in
@@ -17,13 +26,17 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  */
 public class Robot extends TimedRobot {
   private static final String _default = "Default";
-  private static final String custom = "sota18";
+  private static final String custom = "Release";
   private String autoSel;
   private final SendableChooser<String> chooser = new SendableChooser<>();
 
   private Command m_autonomousCommand;
 
   private final RobotContainer m_robotContainer;
+  private final OutTake outtake;
+  // private final TalonSRX motor;
+  private final Drive drive;
+  private final AutoHandler autos;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -34,9 +47,36 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
 
-    chooser.setDefaultOption("default", _default);
-    chooser.addOption("sota18", custom);
+    chooser.setDefaultOption("Default", _default);
+    chooser.addOption("Release", custom);
     SmartDashboard.putData("choices", chooser);
+
+    TalonSRX x = new TalonSRX(1);
+    x.setInverted(false);
+    x.configPeakCurrentLimit(40);
+    TalonSRX driveFrontRight = new TalonSRX(15);
+    TalonSRX driveFrontLeft = new TalonSRX(2);
+    TalonSRX driveBackRight = new TalonSRX(14);
+    TalonSRX driveBackLeft = new TalonSRX(0);
+    // Pose2d robotpose = new Pose2d();
+
+    //ALL drive Settings
+    //Sets inverted to false
+    driveFrontLeft.setInverted(false);
+    driveFrontRight.setInverted(false);
+    driveBackLeft.setInverted(false);
+    driveBackRight.setInverted(false);
+
+    //Sets Peak Amp (Power) limit to 40
+    driveFrontLeft.configPeakCurrentLimit(40);
+    driveFrontRight.configPeakCurrentLimit(40);
+    driveBackLeft.configPeakCurrentLimit(40);
+    driveBackRight.configPeakCurrentLimit(40);
+
+    // motor = x;
+    outtake = new OutTake(x);
+    drive = new Drive(driveFrontLeft,driveFrontRight,driveBackRight,driveBackLeft);
+    autos = new AutoHandler(outtake, drive);
   }
 
   /**
@@ -80,10 +120,24 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
-    switch (autoSel) {
-      case custom: break;
-      case _default: break;
-    }
+    // switch (autoSel) {
+    //   case custom: 
+      // AutoController.driveDir(0);
+      autos.driveDir(0, .3, 7.0);
+      autos.spitCoral();
+      // AutoController.runMotor(motor, 1);
+
+      // motor.set(TalonSRXControlMode.PercentOutput, .2);
+    //   System.out.println("THIS IS THE CUSTOM AUTO");
+    //   // outtake.setSpeed(.2);
+    //   ;
+    //   case _default: default: 
+    //   motor.set(TalonSRXControlMode.PercentOutput, -.1);
+    //   System.out.println("THIS IS THE DEFAULT AUTO");
+    //   // outtake.setSpeed(-.1);
+    //   ;
+    // } 
+    System.out.println(autoSel);
   }
 
   @Override

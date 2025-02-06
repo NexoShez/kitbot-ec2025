@@ -6,16 +6,17 @@ package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 // import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.auto.NamedCommands;
+// import com.pathplanner.lib.auto.NamedCommands;
 // import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.AutoController;
+// import frc.robot.commands.AutoController;
 import frc.robot.subsystems.OutTake;
+// import frc.robot.subsystems.AutoHandler;
 import frc.robot.subsystems.Drive;
 // import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+// import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+// import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -34,8 +35,9 @@ public class RobotContainer {
   // private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final OutTake mOutTake;
   private final Drive mDrive;
+  // private final AutoHandler autos;
 
-  private SendableChooser<Command> chooser = new SendableChooser<>();
+  // private SendableChooser<Command> chooser = new SendableChooser<>();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
@@ -82,22 +84,21 @@ public class RobotContainer {
         )
       );
 
-      AutoCommands();
+      // AutoCommands();
 
-      SmartDashboard.putData("auto chooser from robotc.", chooser);
-
+      // SmartDashboard.putData("choices", chooser);
 
     // Configure the trigger bindings
     configureBindings();
   }
 
-  private void AutoCommands() {
-    AutoController auto_ = new AutoController(mOutTake);
-    NamedCommands.registerCommand("Release", auto_);
+  // private void AutoCommands() {
+  //   AutoController auto_ = new AutoController(mOutTake);
+  //   NamedCommands.registerCommand("Release", auto_.Release());
     
-    chooser.setDefaultOption("_default", auto_);
-    chooser.addOption("Release", auto_);
-  }
+  //   chooser.setDefaultOption("Default", auto_);
+  //   chooser.addOption("Release", auto_.Release());
+  // }
 
   // public OutTake returnOutTake() {
   //   return mOutTake;
@@ -139,7 +140,9 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
 
     // An example command will be run in autonomous
-    return chooser.getSelected();
+    // return chooser.getSelected();
     // return new PathPlannerAuto("KitBot_TEST");
+
+    return Commands.print("No autonomous command configured");
   }
 }

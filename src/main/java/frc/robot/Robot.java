@@ -5,7 +5,7 @@
 package frc.robot;
 
 // import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+// import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 // import edu.wpi.first.wpilibj.motorcontrol.Talon;
@@ -14,10 +14,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 // import edu.wpi.first.wpilibj2.command.Commands;
-import frc.robot.subsystems.AutoHandler;
+// import frc.robot.subsystems.AutoHandler;
 // import frc.robot.commands.AutoController;
-import frc.robot.subsystems.Drive;
-import frc.robot.subsystems.OutTake;
+// import frc.robot.subsystems.Drive;
+// import frc.robot.subsystems.OutTake;
 
 /**
  * The methods in this class are called automatically corresponding to each mode, as described in
@@ -33,10 +33,10 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private final RobotContainer m_robotContainer;
-  private final OutTake outtake;
+  // private final OutTake outtake;
   // private final TalonSRX motor;
-  private final Drive drive;
-  private final AutoHandler autos;
+  // private final Drive drive;
+  // private final AutoHandler autos;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -51,32 +51,32 @@ public class Robot extends TimedRobot {
     chooser.addOption("Release", custom);
     SmartDashboard.putData("choices", chooser);
 
-    TalonSRX x = new TalonSRX(1);
-    x.setInverted(false);
-    x.configPeakCurrentLimit(40);
-    TalonSRX driveFrontRight = new TalonSRX(15);
-    TalonSRX driveFrontLeft = new TalonSRX(2);
-    TalonSRX driveBackRight = new TalonSRX(14);
-    TalonSRX driveBackLeft = new TalonSRX(0);
-    // Pose2d robotpose = new Pose2d();
+    // TalonSRX x = new TalonSRX(1);
+    // x.setInverted(false);
+    // x.configPeakCurrentLimit(40);
+    // TalonSRX driveFrontRight = new TalonSRX(15);
+    // TalonSRX driveFrontLeft = new TalonSRX(2);
+    // TalonSRX driveBackRight = new TalonSRX(14);
+    // TalonSRX driveBackLeft = new TalonSRX(0);
+    // // Pose2d robotpose = new Pose2d();
 
-    //ALL drive Settings
-    //Sets inverted to false
-    driveFrontLeft.setInverted(false);
-    driveFrontRight.setInverted(false);
-    driveBackLeft.setInverted(false);
-    driveBackRight.setInverted(false);
+    // //ALL drive Settings
+    // //Sets inverted to false
+    // driveFrontLeft.setInverted(false);
+    // driveFrontRight.setInverted(false);
+    // driveBackLeft.setInverted(false);
+    // driveBackRight.setInverted(false);
 
-    //Sets Peak Amp (Power) limit to 40
-    driveFrontLeft.configPeakCurrentLimit(40);
-    driveFrontRight.configPeakCurrentLimit(40);
-    driveBackLeft.configPeakCurrentLimit(40);
-    driveBackRight.configPeakCurrentLimit(40);
+    // //Sets Peak Amp (Power) limit to 40
+    // driveFrontLeft.configPeakCurrentLimit(40);
+    // driveFrontRight.configPeakCurrentLimit(40);
+    // driveBackLeft.configPeakCurrentLimit(40);
+    // driveBackRight.configPeakCurrentLimit(40);
 
-    // motor = x;
-    outtake = new OutTake(x);
-    drive = new Drive(driveFrontLeft,driveFrontRight,driveBackRight,driveBackLeft);
-    autos = new AutoHandler(outtake, drive);
+    // // motor = x;
+    // outtake = new OutTake(x);
+    // drive = new Drive(driveFrontLeft,driveFrontRight,driveBackRight,driveBackLeft);
+    // autos = new AutoHandler(outtake, drive);
   }
 
   /**
@@ -123,8 +123,9 @@ public class Robot extends TimedRobot {
     // switch (autoSel) {
     //   case custom: 
       // AutoController.driveDir(0);
-      autos.driveDir(0, .3, 7.0);
-      autos.spitCoral();
+      // autos.driveDir(0, .3, 7.0);
+      // autos._wait(8);
+      // autos.spitCoral();
       // AutoController.runMotor(motor, 1);
 
       // motor.set(TalonSRXControlMode.PercentOutput, .2);

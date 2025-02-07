@@ -45,18 +45,18 @@ public class AutoController extends SequentialCommandGroup {
       // addCommands();
     }
   
-    public Command Release() {
+    public Command spitCoral() {
       return Commands.sequence(
         Commands.run(
           () -> outtake.setSpeed(-1),
            outtake
-         ).raceWith(Commands.waitSeconds(3))
+         ).raceWith(Commands.waitSeconds(.4)),
 
-      // Commands.run(
-      //   () -> outtake.setSpeed(0),
-      //   outtake 
-      //   )
-      );
+      Commands.run(
+        () -> outtake.setSpeed(0),
+        outtake 
+        )
+        );
   }
   public static Command runMotor(TalonSRX x, double speed) {
     return Commands.sequence(
@@ -68,15 +68,22 @@ public class AutoController extends SequentialCommandGroup {
 
   }
 
-  public static Command driveDir(int dir) {
+  public Command driveDir(int dir, double time) {
     final double _speed;
     if (dir == 1) {
-      _speed = -.3;
+      _speed = -.8;
     } else {
-      _speed = .3;
+      _speed = .8;
     }
     return
-      Commands.run(() -> drive.driveDir(_speed, _speed), drive)
+      Commands.sequence(
+        Commands.run(() -> drive.driveDir(_speed, _speed), drive).raceWith(Commands.waitSeconds(5)),
+        Commands.run(() -> drive.driveDir(0, 0), drive)
+      )
     ;
+  }
+
+  public Command stopDriving() {
+    return Commands.run(() -> drive.driveDir(0, 0), drive);
   }
 }

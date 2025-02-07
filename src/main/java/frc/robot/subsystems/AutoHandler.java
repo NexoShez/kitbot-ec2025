@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
@@ -47,9 +48,9 @@ public class AutoHandler extends SubsystemBase {
   }
 
   public void spitCoral() {
-    outtake.setSpeed(1);
+    Commands.run(() -> outtake.setSpeed(1), outtake).withTimeout(3);
     _wait(3);
-    outtake.setSpeed(0);
+    Commands.runOnce(() -> outtake.setSpeed(0), outtake);
   }
 
   @Override

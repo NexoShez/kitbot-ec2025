@@ -10,6 +10,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 // import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.AutoController;
 // import frc.robot.commands.AutoController;
 import frc.robot.subsystems.OutTake;
 // import frc.robot.subsystems.AutoHandler;
@@ -36,6 +37,7 @@ public class RobotContainer {
   private final OutTake mOutTake;
   private final Drive mDrive;
   // private final AutoHandler autos;
+  private final AutoController _autos;
 
   // private SendableChooser<Command> chooser = new SendableChooser<>();
 
@@ -71,6 +73,8 @@ public class RobotContainer {
 
     // Create mDrive
     mDrive = new Drive(driveFrontRight,driveFrontLeft,driveBackRight,driveBackLeft/*, robotpose*/);
+
+    _autos = new AutoController(mOutTake, mDrive);
 
     // this allows the joysticks to control the 4 drive motors
     // without being a simple "true-false" statement
@@ -143,6 +147,15 @@ public class RobotContainer {
     // return chooser.getSelected();
     // return new PathPlannerAuto("KitBot_TEST");
 
-    return Commands.print("No autonomous command configured");
+    // return Commands.print("No autonomous command configured");
+    return Commands.sequence(
+      Commands.run(() -> _autos.driveDir(0,3), mDrive).raceWith(Commands.waitSeconds(5)),
+      Commands.runOnce(() -> _autos.stopDriving(), mDrive).raceWith(Commands.waitSeconds(.2)),
+      Commands.run(() -> _autos.spitCoral(), mDrive).raceWith(Commands.waitSeconds(2)),
+      Commands.run(() -> _autos.driveDir(1,.75), mDrive).raceWith(Commands.waitSeconds(2)),
+      Commands.runOnce(() -> _autos.stopDriving(), mDrive).raceWith(Commands.waitSeconds(.2))
+
+
+    );
   }
 }

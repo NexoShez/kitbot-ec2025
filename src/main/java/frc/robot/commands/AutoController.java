@@ -70,14 +70,14 @@ public class AutoController extends SequentialCommandGroup {
 
   public Command driveDir(int dir, double time) {
     final double _speed;
-    if (dir == 1) {
+    if (dir == 0) {
       _speed = -.8;
     } else {
       _speed = .8;
     }
     return
       Commands.sequence(
-        Commands.run(() -> drive.driveDir(_speed, _speed), drive).raceWith(Commands.waitSeconds(5)),
+        Commands.run(() -> drive.driveDir(_speed, _speed), drive).raceWith(Commands.waitSeconds(time)),
         Commands.run(() -> drive.driveDir(0, 0), drive)
       )
     ;

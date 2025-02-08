@@ -149,13 +149,19 @@ public class RobotContainer {
 
     // return Commands.print("No autonomous command configured");
     return Commands.sequence(
-      Commands.run(() -> _autos.driveDir(0,3), mDrive).raceWith(Commands.waitSeconds(5)),
-      Commands.runOnce(() -> _autos.stopDriving(), mDrive).raceWith(Commands.waitSeconds(.2)),
-      Commands.run(() -> _autos.spitCoral(), mDrive).raceWith(Commands.waitSeconds(2)),
-      Commands.run(() -> _autos.driveDir(1,.75), mDrive).raceWith(Commands.waitSeconds(2)),
-      Commands.runOnce(() -> _autos.stopDriving(), mDrive).raceWith(Commands.waitSeconds(.2))
-
+    //   Commands.run(() -> _autos.driveDir(0,3), mDrive).raceWith(Commands.waitSeconds(5)),
+    //   Commands.runOnce(() -> _autos.stopDriving(), mDrive).raceWith(Commands.waitSeconds(.2)),
+    //   Commands.run(() -> _autos.spitCoral(), mOutTake).raceWith(Commands.waitSeconds(2)),
+    //   Commands.run(() -> _autos.driveDir(1,.75), mDrive).raceWith(Commands.waitSeconds(2)),
+    //   Commands.runOnce(() -> _autos.stopDriving(), mDrive).raceWith(Commands.waitSeconds(.2))
+      _autos.driveDir(0,2.5).raceWith(Commands.waitSeconds(2.5)),
+      _autos.stopDriving().raceWith(Commands.waitSeconds(.5)),
+      _autos.spitCoral().raceWith(Commands.waitSeconds(1.2)),
+      _autos.driveDir(1,1).raceWith(Commands.waitSeconds(1)),
+      _autos.stopDriving()
 
     );
+
+    // return _autos.spitCoral();
   }
 }

@@ -7,11 +7,14 @@ package frc.robot.commands;
 import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import edu.wpi.first.wpilibj.LEDPattern;
+import edu.wpi.first.wpilibj.util.Color;
 // import edu.wpi.first.wpilibj.motorcontrol.Talon;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.Drive;
+import frc.robot.subsystems.LEDs;
 import frc.robot.subsystems.OutTake;
 // import swervelib.encoders.TalonSRXEncoderSwerve;
 
@@ -21,9 +24,18 @@ import frc.robot.subsystems.OutTake;
 public class AutoController extends SequentialCommandGroup {
   private static Drive drive;
   private static OutTake outtake;
+  private static LEDs led;
+
+  private static LEDPattern[] colors = {
+    LEDPattern.solid(Color.kRed), 
+    LEDPattern.solid(Color.kGreen),
+    LEDPattern.solid(Color.kBlue),
+    LEDPattern.solid(Color.kBlack),
+    LEDPattern.solid(Color.kWhite)
+  };
   
     /** Creates a new Auto. */
-    public AutoController(OutTake motor, Drive y) {
+    public AutoController(OutTake motor, Drive y, LEDs z) {
       if (motor == null) {
         System.out.println("motor is null");
         // throw new NullPointerException("Outtake Motor is Null in AutoController");
@@ -39,6 +51,8 @@ public class AutoController extends SequentialCommandGroup {
       outtake = new OutTake(x);
 
       drive = y;
+
+      led = z;
 
       // Add your commands in the addCommands() call, e.g.
       // addCommands(new FooCommand(), new BarCommand());
@@ -86,4 +100,11 @@ public class AutoController extends SequentialCommandGroup {
   public Command stopDriving() {
     return Commands.run(() -> drive.driveDir(0, 0), drive);
   }
+
+  // public Command flashLEDS(LEDPattern x, LEDPattern y) {
+  //   return Commands.sequence(
+  //     Commands.run(() -> led.setColor(), led).raceWith(Commands.waitSeconds(2)),
+  //     Commands.run(() -> led.setColor(), led)
+  //   );
+  // }
 }

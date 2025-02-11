@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import static edu.wpi.first.units.Units.Percent;
+
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 // import com.pathplanner.lib.auto.AutoBuilder;
 // import com.pathplanner.lib.auto.NamedCommands;
@@ -15,6 +17,11 @@ import frc.robot.commands.AutoController;
 import frc.robot.subsystems.OutTake;
 // import frc.robot.subsystems.AutoHandler;
 import frc.robot.subsystems.Drive;
+import frc.robot.subsystems.LEDs;
+import edu.wpi.first.wpilibj.AddressableLED;
+import edu.wpi.first.wpilibj.LEDPattern;
+import edu.wpi.first.wpilibj.util.Color;
+import edu.wpi.first.wpilibj.util.Color.RGBChannel;
 // import edu.wpi.first.math.geometry.Pose2d;
 // import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 // import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -38,6 +45,19 @@ public class RobotContainer {
   private final Drive mDrive;
   // private final AutoHandler autos;
   private final AutoController _autos;
+  private final LEDs led;
+  
+  LEDPattern[] colors = {
+    LEDPattern.solid(Color.kRed),
+    LEDPattern.solid(Color.kGreen),
+    LEDPattern.solid(Color.kBlue),
+    LEDPattern.solid(Color.kWhite),
+    LEDPattern.solid(Color.fromHSV(72, 100, 100))
+  };
+
+  RGBChannel redC = RGBChannel.kRed;
+  RGBChannel greC = RGBChannel.kGreen;
+  RGBChannel bluC = RGBChannel.kBlue;
 
   // private SendableChooser<Command> chooser = new SendableChooser<>();
 
@@ -70,11 +90,16 @@ public class RobotContainer {
     driveFrontRight.configPeakCurrentLimit(40);
     driveBackLeft.configPeakCurrentLimit(40);
     driveBackRight.configPeakCurrentLimit(40);
+    
+    LEDPattern red= LEDPattern.solid(Color.kRed);
+    AddressableLED _led = new AddressableLED(0);
+
+    led = new LEDs(red, _led);
 
     // Create mDrive
     mDrive = new Drive(driveFrontRight,driveFrontLeft,driveBackRight,driveBackLeft/*, robotpose*/);
 
-    _autos = new AutoController(mOutTake, mDrive);
+    _autos = new AutoController(mOutTake, mDrive, led);
 
     // this allows the joysticks to control the 4 drive motors
     // without being a simple "true-false" statement
@@ -127,6 +152,9 @@ public class RobotContainer {
     m_driverController.rightTrigger().onTrue(Commands.run(() -> mOutTake.setSpeed(-1), mOutTake));
     m_driverController.rightTrigger().onFalse(Commands.runOnce(() -> mOutTake.setSpeed(0), mOutTake));
 
+    m_driverController.x().onTrue(Commands.runOnce(() -> led.startColor(), led));
+    m_driverController.x().onFalse(Commands.runOnce(() -> led.shutOff(), led));
+    // m_driverController.y().onTrue(Commands.runOnce(() -> led.applyGradient(), led));
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     // new Trigger(m_exampleSubsystem::exampleCondition)
     //     .onTrue(new ExampleCommand(m_exampleSubsystem));
@@ -141,14 +169,15 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  public Command getAutonomousCommand() {
+  public Command getAutonomousCommand(String action) {
 
     // An example command will be run in autonomous
     // return chooser.getSelected();
     // return new PathPlannerAuto("KitBot_TEST");
 
     // return Commands.print("No autonomous command configured");
-    return Commands.sequence(
+    if (action == "Default") {
+      return Commands.sequence(
     //   Commands.run(() -> _autos.driveDir(0,3), mDrive).raceWith(Commands.waitSeconds(5)),
     //   Commands.runOnce(() -> _autos.stopDriving(), mDrive).raceWith(Commands.waitSeconds(.2)),
     //   Commands.run(() -> _autos.spitCoral(), mOutTake).raceWith(Commands.waitSeconds(2)),
@@ -161,7 +190,19 @@ public class RobotContainer {
       _autos.stopDriving()
 
     );
+    } else if (action == "Release") {
+      return Commands.sequence(
+      _autos.driveDir(0,2.5).raceWith(Commands.waitSeconds(2.5)),
+      _autos.stopDriving().raceWith(Commands.waitSeconds(.5)),
+      _autos.spitCoral().raceWith(Commands.waitSeconds(1.2)),
+      _autos.driveDir(1,1).raceWith(Commands.waitSeconds(1)),
+      _autos.stopDriving()
 
-    // return _autos.spitCoral();
+    );
+    } else {
+      return Commands.print("no sigma auto selected");
+    }
+
+    // return _autos.spitCoral(); THIS IS ONE COMMAND
   }
 }

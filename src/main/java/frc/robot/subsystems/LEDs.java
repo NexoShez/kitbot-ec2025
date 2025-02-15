@@ -4,7 +4,7 @@
 
 package frc.robot.subsystems;
 
-import static edu.wpi.first.units.Units.Percent;
+// import static edu.wpi.first.units.Units.Percent;
 import static edu.wpi.first.units.Units.Seconds;
 
 // import org.w3c.dom.css.RGBColor;
@@ -31,7 +31,7 @@ public class LEDs extends SubsystemBase {
   // LEDPattern synced = example.blink(RobotContainer::getRSLState);
   LEDPattern rainbow = LEDPattern.rainbow(255, 180);
   LEDPattern noColor;
-  AddressableLEDBuffer buffer = new AddressableLEDBuffer(200);
+  AddressableLEDBuffer buffer = new AddressableLEDBuffer(144);
   /** Creates a new LEDs. */
   public LEDs(LEDPattern a, AddressableLED b) {
     example = a;
@@ -47,11 +47,11 @@ public class LEDs extends SubsystemBase {
     noColor = LEDPattern.kOff;
     blink = example.blink(Seconds.of(2));
     // blink.applyTo(buffer);
-    rainbow.applyTo(buffer);
+    // rainbow.applyTo(buffer);
   }
 
   public void startColor() {
-    // example.applyTo(buffer);
+    example.applyTo(buffer);
 
     led.setData(buffer);
     led.start();

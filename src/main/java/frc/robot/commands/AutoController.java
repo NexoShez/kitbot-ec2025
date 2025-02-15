@@ -7,8 +7,8 @@ package frc.robot.commands;
 import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
-import edu.wpi.first.wpilibj.LEDPattern;
-import edu.wpi.first.wpilibj.util.Color;
+// import edu.wpi.first.wpilibj.LEDPattern;
+// import edu.wpi.first.wpilibj.util.Color;
 // import edu.wpi.first.wpilibj.motorcontrol.Talon;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -24,15 +24,15 @@ import frc.robot.subsystems.OutTake;
 public class AutoController extends SequentialCommandGroup {
   private static Drive drive;
   private static OutTake outtake;
-  private static LEDs led;
+  // private static LEDs led;
 
-  private static LEDPattern[] colors = {
-    LEDPattern.solid(Color.kRed), 
-    LEDPattern.solid(Color.kGreen),
-    LEDPattern.solid(Color.kBlue),
-    LEDPattern.solid(Color.kBlack),
-    LEDPattern.solid(Color.kWhite)
-  };
+  // private static LEDPattern[] colors = {
+  //   LEDPattern.solid(Color.kRed), 
+  //   LEDPattern.solid(Color.kGreen),
+  //   LEDPattern.solid(Color.kBlue),
+  //   LEDPattern.solid(Color.kBlack),
+  //   LEDPattern.solid(Color.kWhite)
+  // };
   
     /** Creates a new Auto. */
     public AutoController(OutTake motor, Drive y, LEDs z) {
@@ -52,7 +52,7 @@ public class AutoController extends SequentialCommandGroup {
 
       drive = y;
 
-      led = z;
+      // led = z;
 
       // Add your commands in the addCommands() call, e.g.
       // addCommands(new FooCommand(), new BarCommand());
@@ -107,4 +107,8 @@ public class AutoController extends SequentialCommandGroup {
   //     Commands.run(() -> led.setColor(), led)
   //   );
   // }
+
+  public Command owengillicks25pieceAUTO_getHIMoutOFhereplease() {
+    return Commands.print("this is gillicks 25 piece auto .2 second cycle = 1 coral on l4");
+  }
 }

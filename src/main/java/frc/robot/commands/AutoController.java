@@ -85,9 +85,9 @@ public class AutoController extends SequentialCommandGroup {
   public Command driveDir(int dir, double time) {
     final double _speed;
     if (dir == 0) {
-      _speed = -.8;
+      _speed = -1;
     } else {
-      _speed = .8;
+      _speed = 1;
     }
     return
       Commands.sequence(

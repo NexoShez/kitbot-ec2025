@@ -60,11 +60,11 @@ public class Drive extends SubsystemBase {
 
     // ben wanted this
     if (isDriveControlsInv == true) {
-      y1 = y1 * -1;
-      y2 = y2 * 1; // invert by opposite for some reason
+      y1 = y1 * -.5;
+      y2 = y2 * .5; // invert by opposite for some reason
     } else {
-      y1 = y1 * 1;
-      y2 = y2 * -1;
+      y1 = y1 * .5;
+      y2 = y2 * -.5;
     }
 
     // if (y1 < .2) {

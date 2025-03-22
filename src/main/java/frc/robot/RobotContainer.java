@@ -8,7 +8,7 @@ package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 // import com.pathplanner.lib.auto.AutoBuilder;
-// import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.auto.NamedCommands;
 // import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import frc.robot.Constants.OperatorConstants;
@@ -21,10 +21,10 @@ import frc.robot.subsystems.LEDs;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.LEDPattern;
 import edu.wpi.first.wpilibj.util.Color;
-import edu.wpi.first.wpilibj.util.Color.RGBChannel;
+// import edu.wpi.first.wpilibj.util.Color.RGBChannel;
 // import edu.wpi.first.math.geometry.Pose2d;
-// import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-// import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -38,9 +38,6 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
-  // public static final OutTake returnOutTake = null;
-  // The robot's subsystems and commands are defined here...
-  // private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final OutTake mOutTake;
   private final Drive mDrive;
   // private final AutoHandler autos;
@@ -55,11 +52,7 @@ public class RobotContainer {
     LEDPattern.solid(Color.fromHSV(72, 100, 100))
   };
 
-  RGBChannel redC = RGBChannel.kRed;
-  RGBChannel greC = RGBChannel.kGreen;
-  RGBChannel bluC = RGBChannel.kBlue;
-
-  // private SendableChooser<Command> chooser = new SendableChooser<>();
+  private SendableChooser<Command> chooser = new SendableChooser<>();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
@@ -80,10 +73,10 @@ public class RobotContainer {
 
     //ALL drive Settings
     //Sets inverted to false
-    driveFrontLeft.setInverted(false);
-    driveFrontRight.setInverted(false);
-    driveBackLeft.setInverted(false);
-    driveBackRight.setInverted(false);
+    driveFrontLeft.setInverted(true);
+    driveFrontRight.setInverted(true);
+    driveBackLeft.setInverted(true);
+    driveBackRight.setInverted(true);
 
     //Sets Peak Amp (Power) limit to 40
     driveFrontLeft.configPeakCurrentLimit(40);
@@ -115,7 +108,9 @@ public class RobotContainer {
 
       // AutoCommands();
 
-      // SmartDashboard.putData("choices", chooser);
+      Autos();
+
+      SmartDashboard.putData("choices", chooser);
 
     // Configure the trigger bindings
     configureBindings();
@@ -128,6 +123,11 @@ public class RobotContainer {
   //   chooser.setDefaultOption("Default", auto_);
   //   chooser.addOption("Release", auto_.Release());
   // }
+
+  private void Autos() {
+    NamedCommands.registerCommand("Spit Coral", _autos.spitCoral());
+    chooser.setDefaultOption("Leave Middle 1 point", _autos);
+  }
 
   // public OutTake returnOutTake() {
   //   return mOutTake;
@@ -192,10 +192,10 @@ public class RobotContainer {
     );
     } else if (action == "Release") {
       return Commands.sequence(
-      _autos.driveDir(0,2.5).raceWith(Commands.waitSeconds(2.5)),
+      _autos.driveDir(0,.6).raceWith(Commands.waitSeconds(2.5)),
       _autos.stopDriving().raceWith(Commands.waitSeconds(.5)),
       _autos.spitCoral().raceWith(Commands.waitSeconds(1.2)),
-      _autos.driveDir(1,1).raceWith(Commands.waitSeconds(1)),
+      _autos.driveDir(1,.2).raceWith(Commands.waitSeconds(1)),
       _autos.stopDriving()
 
     );

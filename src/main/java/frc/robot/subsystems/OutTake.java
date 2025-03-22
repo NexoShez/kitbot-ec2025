@@ -19,7 +19,7 @@ public class OutTake extends SubsystemBase {
   }
 
   public void setSpeed(double speed) {
-    motor.set(TalonSRXControlMode.PercentOutput,speed);
+    motor.set(TalonSRXControlMode.PercentOutput,speed*0.9);
   }
 
   @Override

@@ -4,26 +4,11 @@
 
 package frc.robot.subsystems;
 
-// import java.util.function.BooleanSupplier;
-
 import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-// import com.pathplanner.lib.auto.AutoBuilder;
-// import com.pathplanner.lib.config.RobotConfig;
-// import com.pathplanner.lib.controllers.PPLTVController;
-// import com.pathplanner.lib.controllers.PathFollowingController;
-// import com.pathplanner.lib.util.DriveFeedforwards;
-
-// import edu.wpi.first.math.geometry.Pose2d;
-// import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
-// import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
-// import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
-// import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
-// import edu.wpi.first.math.kinematics.Odometry;
-// import edu.wpi.first.math.util.Units;
-// import edu.wpi.first.wpilibj.DriverStation;
-// import edu.wpi.first.wpilibj.drive.DifferentialDrive.WheelSpeeds;
+// import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Drive extends SubsystemBase {
@@ -31,6 +16,9 @@ public class Drive extends SubsystemBase {
   private final TalonSRX mFL;
   private final TalonSRX mBR;
   private final TalonSRX mBL;
+
+  // private final Encoder leftEncoder = new Encoder(0, 1, false);
+  // private final Encoder rightEncoder = new Encoder(2, 3, true);
 
   // PATHPLANNER DOESNT WORK FOR DIFFERENTIAL DRIVE BRO
   // private final Pose2d robotpose;
@@ -41,7 +29,6 @@ public class Drive extends SubsystemBase {
   //   new Pose2d(5.0, 13.5, new Rotation2d()));
 
   private boolean isDriveControlsInv = false;
-  // private double deadzone = .2;
 
   /** Creates a new Drive. */
   public Drive(TalonSRX fR, TalonSRX fL, TalonSRX bR, TalonSRX bL /*Pose2d pose*/) {
@@ -176,5 +163,6 @@ public class Drive extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putBoolean("Drive Inverted", isDriveControlsInv);
   }
 }
